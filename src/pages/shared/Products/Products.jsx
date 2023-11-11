@@ -13,7 +13,7 @@ const Products = () => {
   return (
     <div>
       <h1>Total Games: {games.length}</h1>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 gap-4">
         {games.map((game) => (
           <Card key={game.id} cardGame={game}></Card>
         ))}
