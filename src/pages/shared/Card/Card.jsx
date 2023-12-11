@@ -1,18 +1,14 @@
 const Card = ({ cardGame }) => {
-  const { slug, name, background_image } = cardGame;
+  const { GameId, GameName, GameImage } = cardGame;
 
   return (
     <div>
       <div className="card card-compact bg-base-100 shadow-xl">
         <figure>
-          <img
-            src={background_image}
-            alt="Shoes"
-            className="h-60 object-cover"
-          />
+          <img src={GameImage} alt="Shoes" className="h-60 object-cover" />
         </figure>
         <div className="card-body">
-          <h2 className="card-title">{name}</h2>
+          <h2 className="card-title">{GameName}</h2>
           <div className="card-actions justify-end">
             <button className="btn btn-primary">Buy Now</button>
           </div>
