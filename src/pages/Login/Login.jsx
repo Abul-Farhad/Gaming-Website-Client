@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
+  const location = useLocation();
+  const navigate = useNavigate();
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -13,6 +16,7 @@ const Login = () => {
       .then((res) => {
         console.log(res);
         alert("Login Successfull!");
+        location?.state ? navigate(location.state) : navigate("/");
       })
       .catch((err) => {
         alert("Invalid Login Credentials");

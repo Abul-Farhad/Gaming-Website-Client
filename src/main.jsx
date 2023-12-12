@@ -7,6 +7,9 @@ import Home from "./pages/Home/Home.jsx";
 import Login from "./pages/Login/Login.jsx";
 import Register from "./pages/Register/Register.jsx";
 import AuthProvider from "./Providers/AuthProvider.jsx";
+import AddGame from "./pages/AddGame/AddGame.jsx";
+import Cart from "./pages/Cart/Cart.jsx";
+import PrivateRoute from "./Routes/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +27,18 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/add",
+        element: <AddGame></AddGame>,
+      },
+      {
+        path: "/cart",
+        element: (
+          <PrivateRoute>
+            <Cart></Cart>
+          </PrivateRoute>
+        ),
       },
     ],
   },
