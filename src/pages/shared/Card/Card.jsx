@@ -1,9 +1,10 @@
 import { useContext } from "react";
 import { AuthContext } from "../../../Providers/AuthProvider";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import ReactStarsRating from "react-awesome-stars-rating";
 
-const Card = ({ cardGame }) => {
-  const { user } = useContext(AuthContext);
+const Card = ({ cardGame, handleDelete }) => {
+  const { user, isAdmin } = useContext(AuthContext);
   const navigate = useNavigate();
   const { GameId, GameName, GameImage, GamePrice, GameRating } = cardGame;
   const handleAddToCart = () => {
@@ -30,6 +31,7 @@ const Card = ({ cardGame }) => {
         alert(data);
       });
   };
+
   return (
     <div>
       <div className="card card-compact bg-base-100 shadow-xl">
@@ -39,14 +41,33 @@ const Card = ({ cardGame }) => {
         <div className="card-body">
           <h2 className="card-title">{GameName}</h2>
           <div className="flex justify-between items-center">
-            <p>Price: {GamePrice}</p>
-            <p>Rating: {GameRating}</p>
+            <p>Price: ${GamePrice}</p>
+            <ReactStarsRating
+              className="flex"
+              value={parseFloat(GameRating)}
+              isHalf={false}
+              isEdit={false}
+            ></ReactStarsRating>
           </div>
-          <div className="card-actions justify-end">
-            <button onClick={handleAddToCart} className="btn btn-primary">
-              Add to Cart
-            </button>
-          </div>
+          {isAdmin ? (
+            <div className="flex justify-between items-center">
+              <Link to={`/update/${GameId}`} className="btn btn-primary">
+                Update
+              </Link>
+              <button
+                onClick={() => handleDelete(GameId)}
+                className="btn btn-secondary"
+              >
+                Delete
+              </button>
+            </div>
+          ) : (
+            <div className="card-actions justify-end">
+              <button onClick={handleAddToCart} className="btn btn-primary">
+                Add to Cart
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

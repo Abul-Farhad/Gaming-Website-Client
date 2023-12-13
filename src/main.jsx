@@ -10,6 +10,8 @@ import AuthProvider from "./Providers/AuthProvider.jsx";
 import AddGame from "./pages/AddGame/AddGame.jsx";
 import Cart from "./pages/Cart/Cart.jsx";
 import PrivateRoute from "./Routes/PrivateRoute.jsx";
+import UpdateGame from "./pages/UpdateGame/UpdateGame.jsx";
+import AdminRoute from "./Routes/AdminRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +32,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/add",
-        element: <AddGame></AddGame>,
+        element: (
+          <AdminRoute>
+            <AddGame></AddGame>
+          </AdminRoute>
+        ),
       },
       {
         path: "/cart",
@@ -39,6 +45,12 @@ const router = createBrowserRouter([
             <Cart></Cart>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "/update/:id",
+        loader: ({ params }) =>
+          fetch(`http://127.0.0.1:8000/gameapi/${params.id}`),
+        element: <UpdateGame></UpdateGame>,
       },
     ],
   },

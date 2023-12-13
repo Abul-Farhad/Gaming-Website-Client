@@ -45,7 +45,6 @@ const Cart = () => {
   };
   return (
     <div>
-      <h3>Total cart Items: {cartItems?.length}</h3>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}

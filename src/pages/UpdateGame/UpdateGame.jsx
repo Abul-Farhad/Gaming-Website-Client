@@ -1,33 +1,40 @@
-const AddGame = () => {
-  const addGame = (event) => {
+import { useLoaderData } from "react-router-dom";
+
+const UpdateGame = () => {
+  const { GameId, GameName, GameRating, GameImage, GamePrice } =
+    useLoaderData();
+  const update = (event) => {
     event.preventDefault();
     const form = event.target;
-    const GameName = form.name.value;
-    const GameImage = form.image_url.value;
-    const GameRating = form.rating.value;
-    const GamePrice = form.price.value;
-    const gameData = { GameName, GameImage, GameRating, GamePrice };
-    console.log(gameData);
-
+    const name = form.name.value;
+    const image = form.image_url.value;
+    const rating = form.rating.value;
+    const price = form.price.value;
+    const updatedGame = {
+      GameId,
+      GameName: name,
+      GameImage: image,
+      GameRating: rating,
+      GamePrice: price,
+    };
+    console.log(updatedGame);
     fetch("http://127.0.0.1:8000/gameapi", {
-      method: "POST",
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(gameData),
+      body: JSON.stringify(updatedGame),
     })
       .then((res) => res.json())
       .then((data) => {
-        alert("Game Added Successfully!");
-        console.log(data);
+        alert(data);
       });
   };
-
   return (
     <div>
-      <h3 className="text-4xl text-center font-bold mb-5">Add Game</h3>
+      <h3 className="text-4xl font-bold text-center">Update Game</h3>
       <div>
-        <form onSubmit={addGame} className="card-body">
+        <form onSubmit={update} className="card-body">
           <div className="form-control">
             <label className="label">
               <span className="label-text">Game Name</span>
@@ -36,6 +43,7 @@ const AddGame = () => {
               type="text"
               name="name"
               placeholder="name"
+              defaultValue={GameName}
               className="input input-bordered"
               required
             />
@@ -49,6 +57,7 @@ const AddGame = () => {
               type="text"
               name="image_url"
               placeholder="image_url"
+              defaultValue={GameImage}
               className="input input-bordered"
               required
             />
@@ -61,6 +70,7 @@ const AddGame = () => {
               type="text"
               name="rating"
               placeholder="rating"
+              defaultValue={GameRating}
               className="input input-bordered"
               required
             />
@@ -73,6 +83,7 @@ const AddGame = () => {
               type="text"
               name="price"
               placeholder="$"
+              defaultValue={GamePrice}
               className="input input-bordered"
               required
             />
@@ -82,7 +93,7 @@ const AddGame = () => {
             <input
               type="submit"
               className="btn btn-primary"
-              value="Add Game"
+              value="Update Game"
             ></input>
           </div>
         </form>
@@ -91,4 +102,4 @@ const AddGame = () => {
   );
 };
 
-export default AddGame;
+export default UpdateGame;

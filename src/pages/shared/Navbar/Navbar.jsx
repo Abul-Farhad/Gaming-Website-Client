@@ -5,7 +5,7 @@ import { FaUser } from "@react-icons/all-files/fa/FaUser";
 import useCartItems from "../../../hooks/useCartItems";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext);
+  const { user, isAdmin, logOut } = useContext(AuthContext);
   const { totalCartItems, totalPrice } = useCartItems();
   console.log(totalCartItems, totalPrice);
 
@@ -23,10 +23,14 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="flex-none gap-4">
-        <div>
-          <Link to={"/add"}>Add Game</Link>
-        </div>
-        <Link to={"/cart"}>Cart</Link>
+        {isAdmin ? (
+          <div>
+            <Link to={"/add"}>Add Game</Link>
+          </div>
+        ) : (
+          <Link to={"/cart"}>Cart</Link>
+        )}
+
         {/* <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle">
             <div className="indicator">
@@ -68,24 +72,15 @@ const Navbar = () => {
           <div className="dropdown dropdown-end">
             <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
-                <p className="w-full">
+                <div className="flex justify-center items-center w-full h-full">
                   <FaUser></FaUser>
-                </p>
+                </div>
               </div>
             </label>
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
               <li>
                 <a onClick={handleLogOut}>Logout</a>
               </li>
